@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyparser.urlencoded({ extended: false }));
 
 app.use(
-    session({ 
+    session({
         secret: "jalapenos",
         resave: true,
         saveUninitialized: false,
@@ -39,6 +39,7 @@ app.get("/", middleware.requireLogin, (req, res, next) => {
     let payload = {
         pageTitle: "Home",
         userLoggedIn: req.session.user,
+        userLoggedInJs: JSON.stringify(req.session.user),
     };
     res.status(200).render("home", payload);
 });
