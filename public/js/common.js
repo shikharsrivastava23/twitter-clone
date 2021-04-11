@@ -1,10 +1,10 @@
 $("#postTextarea").keyup(event => {
     var textbox = $(event.target);
     var value = textbox.val().trim();
-    
+
     var submitButton = $("#submitPostButton");
 
-    if(submitButton.length == 0) return alert("No submit button found");
+    if (submitButton.length == 0) return alert("No submit button found");
 
     if (value == "") {
         submitButton.prop("disabled", true);
@@ -12,30 +12,32 @@ $("#postTextarea").keyup(event => {
     }
 
     submitButton.prop("disabled", false);
-})
+});
 
 $("#submitPostButton").click(() => {
     var button = $(event.target);
     var textbox = $("#postTextarea");
 
     var data = {
-        content: textbox.val()
-    }
+        content: textbox.val(),
+    };
 
     $.post("/api/posts", data, postData => {
-        
         var html = createPostHtml(postData);
         $(".postsContainer").prepend(html);
         textbox.val("");
         button.prop("disabled", true);
-    })
-})
+    });
+});
+
+$(document).on("click", ".likeButton", () => {
+    alert("Likeee!!");
+});
 
 function createPostHtml(postData) {
-    
     var postedBy = postData.postedBy;
 
-    if(postedBy._id === undefined) {
+    if (postedBy._id === undefined) {
         return console.log("User object not populated");
     }
 
@@ -69,7 +71,7 @@ function createPostHtml(postData) {
                                 </button>
                             </div>
                             <div class='postButtonContainer'>
-                                <button>
+                                <button class="likeButton"> 
                                     <i class='far fa-heart'></i>
                                 </button>
                             </div>
@@ -80,7 +82,6 @@ function createPostHtml(postData) {
 }
 
 function timeDifference(current, previous) {
-
     var msPerMinute = 60 * 1000;
     var msPerHour = msPerMinute * 60;
     var msPerDay = msPerHour * 24;
@@ -90,28 +91,18 @@ function timeDifference(current, previous) {
     var elapsed = current - previous;
 
     if (elapsed < msPerMinute) {
-        if(elapsed/1000 < 30) return "Just now";
-        
-        return Math.round(elapsed/1000) + ' seconds ago';   
-    }
+        if (elapsed / 1000 < 30) return "Just now";
 
-    else if (elapsed < msPerHour) {
-         return Math.round(elapsed/msPerMinute) + ' minutes ago';   
-    }
-
-    else if (elapsed < msPerDay ) {
-         return Math.round(elapsed/msPerHour ) + ' hours ago';   
-    }
-
-    else if (elapsed < msPerMonth) {
-        return Math.round(elapsed/msPerDay) + ' days ago';   
-    }
-
-    else if (elapsed < msPerYear) {
-        return Math.round(elapsed/msPerMonth) + ' months ago';   
-    }
-
-    else {
-        return Math.round(elapsed/msPerYear ) + ' years ago';   
+        return Math.round(elapsed / 1000) + " seconds ago";
+    } else if (elapsed < msPerHour) {
+        return Math.round(elapsed / msPerMinute) + " minutes ago";
+    } else if (elapsed < msPerDay) {
+        return Math.round(elapsed / msPerHour) + " hours ago";
+    } else if (elapsed < msPerMonth) {
+        return Math.round(elapsed / msPerDay) + " days ago";
+    } else if (elapsed < msPerYear) {
+        return Math.round(elapsed / msPerMonth) + " months ago";
+    } else {
+        return Math.round(elapsed / msPerYear) + " years ago";
     }
 }
