@@ -7,21 +7,18 @@ const Post = require("../../schemas/PostSchema");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-router.get("/", (req, res, next) => {
-    Post.find()
-        .populate("postedBy")
-        .populate("retweetData")
-        .sort({ createdAt: -1 })
-        .then(async results => {
-            results = await User.populate(results, {
-                path: "retweetData.postedBy",
-            });
-            res.status(200).send(results);
-        })
-        .catch(error => {
-            console.log(error);
-            res.sendStatus(400);
-        });
+router.get("/", async (req, res, next) => {
+    var results = await getPosts({});
+    res.status(200).send(results);
+});
+
+router.get("/:id", async (req, res, next) => {
+    var postId = req.params.id;
+
+    var results = await getPosts({ _id: postId });
+    results = results[0];
+
+    res.status(200).send(results);
 });
 
 router.post("/", async (req, res, next) => {
@@ -34,6 +31,10 @@ router.post("/", async (req, res, next) => {
         content: req.body.content,
         postedBy: req.session.user,
     };
+
+    if (req.body.replyTo) {
+        postData.replyTo = req.body.replyTo;
+    }
 
     Post.create(postData)
         .then(async newPost => {
@@ -56,24 +57,23 @@ router.put("/:id/like", async (req, res, next) => {
 
     var option = isLiked ? "$pull" : "$addToSet";
 
-    // insert the user like
+    // Insert user like
     req.session.user = await User.findByIdAndUpdate(
         userId,
         { [option]: { likes: postId } },
         { new: true }
-    ).catch(e => {
-        console.log(e);
+    ).catch(error => {
+        console.log(error);
         res.sendStatus(400);
     });
 
-    // insert post like
-
+    // Insert post like
     var post = await Post.findByIdAndUpdate(
         postId,
         { [option]: { likes: userId } },
         { new: true }
-    ).catch(e => {
-        console.log(e);
+    ).catch(error => {
+        console.log(error);
         res.sendStatus(400);
     });
 
@@ -84,16 +84,16 @@ router.post("/:id/retweet", async (req, res, next) => {
     var postId = req.params.id;
     var userId = req.session.user._id;
 
-    // Try to delete a retweet
+    // Try and delete retweet
     var deletedPost = await Post.findOneAndDelete({
         postedBy: userId,
         retweetData: postId,
-    }).catch(e => {
-        console.log(e);
+    }).catch(error => {
+        console.log(error);
         res.sendStatus(400);
     });
 
-    var option = deletedPost ? "$pull" : "$addToSet";
+    var option = deletedPost != null ? "$pull" : "$addToSet";
 
     var repost = deletedPost;
 
@@ -101,34 +101,45 @@ router.post("/:id/retweet", async (req, res, next) => {
         repost = await Post.create({
             postedBy: userId,
             retweetData: postId,
-        }).catch(e => {
-            console.log(e);
+        }).catch(error => {
+            console.log(error);
             res.sendStatus(400);
         });
     }
-    console.log(repost);
-    // insert the user like
+
+    // Insert user like
     req.session.user = await User.findByIdAndUpdate(
         userId,
         { [option]: { retweets: repost._id } },
         { new: true }
-    ).catch(e => {
-        console.log(e);
+    ).catch(error => {
+        console.log(error);
         res.sendStatus(400);
     });
 
-    // insert post like
-
+    // Insert post like
     var post = await Post.findByIdAndUpdate(
         postId,
         { [option]: { retweetUsers: userId } },
         { new: true }
-    ).catch(e => {
-        console.log(e);
+    ).catch(error => {
+        console.log(error);
         res.sendStatus(400);
     });
 
     res.status(200).send(post);
 });
+
+async function getPosts(filter) {
+    var results = await Post.find(filter)
+        .populate("postedBy")
+        .populate("retweetData")
+        .populate("replyTo")
+        .sort({ createdAt: -1 })
+        .catch(error => console.log(error));
+
+    results = await User.populate(results, { path: "replyTo.postedBy" });
+    return await User.populate(results, { path: "retweetData.postedBy" });
+}
 
 module.exports = router;
