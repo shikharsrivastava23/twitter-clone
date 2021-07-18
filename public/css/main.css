@@ -1,24 +1,27 @@
 :root {
-    --blue: #1fa2f1;
-    --blueLight: #9bd1f9;
+    --blue: #1FA2F1;
+    --blueLight: #9BD1F9;
     --blueBackground: rgba(212, 237, 255, 0.6);
     --buttonHoverBg: #d4edff;
     --lightGrey: rgb(230, 236, 240);
     --spacing: 15px;
     --greyText: rgb(101, 119, 134);
-    --greyButtonText: rgba(0, 0, 0, 0.34);
-    --red: rgb(226, 34, 94);
-    --redBackground: rgba(226, 34, 94, 0.1);
-    --green: rgb(23, 191, 99);
-    --greenBackground: rgba(23, 191, 99, 0.1);
+    --greyButtonText: rgba(0,0,0,0.34);
+    --red: rgb(226,34,94);
+    --redBackground: rgba(226,34,94,0.1);
+    --green: rgb(23,191,99);
+    --greenBackground: rgba(23,191,99,0.1);
 }
 
-html,
-body {
+html, body {
     height: 100%;
     min-height: 100%;
     background-color: #fff;
     font-weight: 300;
+}
+
+ul {
+    margin: 0;
 }
 
 * {
@@ -91,7 +94,7 @@ button span {
 }
 
 .mainSectionContainer {
-    padding: 0;
+    padding:  0;
     border-left: 1px solid var(--lightGrey);
     border-right: 1px solid var(--lightGrey);
     display: flex;
@@ -187,7 +190,7 @@ button span {
 
 .username,
 .date {
-    color: var(--greyText);
+    color: var(--greyText)
 }
 
 .displayName {
@@ -229,7 +232,7 @@ button span {
 
 .postButtonContainer.red button:hover {
     color: var(--red);
-    background-color: var(--redBackground);
+    background-color: var(--redBackground)
 }
 
 .postButtonContainer.green button.active {
@@ -238,7 +241,7 @@ button span {
 
 .postButtonContainer.green button:hover {
     color: var(--green);
-    background-color: var(--greenBackground);
+    background-color: var(--greenBackground)
 }
 
 .postActionContainer {
@@ -388,14 +391,14 @@ button span {
 
 .user .userDetailsContainer {
     flex: 1;
-    padding: 0 var(--spacing);
+    padding: 0 var(--spacing)
 }
 
 .profilePictureButton,
 .coverPhotoButton {
     position: absolute;
     font-size: 50px;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0,0,0,0.6);
     display: none;
 }
 
@@ -421,7 +424,7 @@ button span {
 #coverPreview {
     width: 100%;
     display: block;
-
+ 
     /* This rule is very important, please don't ignore this */
     max-width: 100%;
 }
@@ -436,7 +439,7 @@ button span {
 }
 
 .pinnedPostContainer {
-    border-bottom: 10px solid rgb(230, 236, 240);
+    border-bottom: 10px solid rgb(230,236,240);
 }
 
 .searchBarContainer {
@@ -504,7 +507,7 @@ button span {
 
 .selectedUser {
     font-weight: 300;
-    background-color: #cbe5fe;
+    background-color: #CBE5FE;
     color: #0084ff;
     padding: 5px;
     border-radius: 3px;
@@ -521,7 +524,7 @@ button span {
 }
 
 .resultListItem:hover {
-    background-color: #f2f2f2;
+    background-color: #F2F2F2;
 }
 
 .resultsDetailsContainer {
@@ -609,7 +612,7 @@ button span {
 .chatContainer .footer textarea {
     flex: 1;
     resize: none;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0,0,0,0.05);
     border-radius: 18px;
     border: none;
     padding: 8px 12px;
@@ -671,14 +674,24 @@ button span {
     display: flex;
     align-items: flex-end;
     flex-shrink: 0;
-    -webkit-flex: 0;
 }
 
+.typingDots img,
 .chatMessages .message .messageBody {
     background-color: #f1f0f0;
     padding: 6px 12px;
     border-radius: 18px;
     font-size: 14px;
+}
+
+.typingDots img {
+    height: 35px;
+}
+
+.typingDots {
+    padding: var(--spacing);
+    padding-bottom: 0;
+    display: none;
 }
 
 .chatMessages .message .messageContainer {
@@ -739,7 +752,7 @@ button span {
 }
 
 .senderName {
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0,0,0,0.4);
 }
 
 .chatMessages .imageContainer {
@@ -769,3 +782,4 @@ button span {
     width: 50%;
     max-width: 75px;
 }
+
