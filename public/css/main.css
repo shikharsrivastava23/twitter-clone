@@ -1,19 +1,20 @@
 :root {
-    --blue: #1FA2F1;
-    --blueLight: #9BD1F9;
+    --blue: #1fa2f1;
+    --blueLight: #9bd1f9;
     --blueBackground: rgba(212, 237, 255, 0.6);
     --buttonHoverBg: #d4edff;
     --lightGrey: rgb(230, 236, 240);
     --spacing: 15px;
     --greyText: rgb(101, 119, 134);
-    --greyButtonText: rgba(0,0,0,0.34);
-    --red: rgb(226,34,94);
-    --redBackground: rgba(226,34,94,0.1);
-    --green: rgb(23,191,99);
-    --greenBackground: rgba(23,191,99,0.1);
+    --greyButtonText: rgba(0, 0, 0, 0.34);
+    --red: rgb(226, 34, 94);
+    --redBackground: rgba(226, 34, 94, 0.1);
+    --green: rgb(23, 191, 99);
+    --greenBackground: rgba(23, 191, 99, 0.1);
 }
 
-html, body {
+html,
+body {
     height: 100%;
     min-height: 100%;
     background-color: #fff;
@@ -90,7 +91,7 @@ button span {
 }
 
 .mainSectionContainer {
-    padding:  0;
+    padding: 0;
     border-left: 1px solid var(--lightGrey);
     border-right: 1px solid var(--lightGrey);
     display: flex;
@@ -174,6 +175,7 @@ button span {
 .mainContentContainer {
     flex: 1;
     display: flex;
+    overflow-y: hidden;
 }
 
 .postContentContainer {
@@ -185,7 +187,7 @@ button span {
 
 .username,
 .date {
-    color: var(--greyText)
+    color: var(--greyText);
 }
 
 .displayName {
@@ -227,7 +229,7 @@ button span {
 
 .postButtonContainer.red button:hover {
     color: var(--red);
-    background-color: var(--redBackground)
+    background-color: var(--redBackground);
 }
 
 .postButtonContainer.green button.active {
@@ -236,7 +238,7 @@ button span {
 
 .postButtonContainer.green button:hover {
     color: var(--green);
-    background-color: var(--greenBackground)
+    background-color: var(--greenBackground);
 }
 
 .postActionContainer {
@@ -386,14 +388,14 @@ button span {
 
 .user .userDetailsContainer {
     flex: 1;
-    padding: 0 var(--spacing)
+    padding: 0 var(--spacing);
 }
 
 .profilePictureButton,
 .coverPhotoButton {
     position: absolute;
     font-size: 50px;
-    color: rgba(0,0,0,0.6);
+    color: rgba(0, 0, 0, 0.6);
     display: none;
 }
 
@@ -419,7 +421,7 @@ button span {
 #coverPreview {
     width: 100%;
     display: block;
- 
+
     /* This rule is very important, please don't ignore this */
     max-width: 100%;
 }
@@ -434,7 +436,7 @@ button span {
 }
 
 .pinnedPostContainer {
-    border-bottom: 10px solid rgb(230,236,240);
+    border-bottom: 10px solid rgb(230, 236, 240);
 }
 
 .searchBarContainer {
@@ -464,6 +466,7 @@ button span {
     flex-direction: column;
     min-height: 0;
     flex: 1;
+    flex-basis: 0;
 }
 
 .chatTitleBar {
@@ -501,7 +504,7 @@ button span {
 
 .selectedUser {
     font-weight: 300;
-    background-color: #CBE5FE;
+    background-color: #cbe5fe;
     color: #0084ff;
     padding: 5px;
     border-radius: 3px;
@@ -518,7 +521,7 @@ button span {
 }
 
 .resultListItem:hover {
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
 }
 
 .resultsDetailsContainer {
@@ -606,7 +609,7 @@ button span {
 .chatContainer .footer textarea {
     flex: 1;
     resize: none;
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0, 0, 0, 0.05);
     border-radius: 18px;
     border: none;
     padding: 8px 12px;
@@ -660,4 +663,109 @@ button span {
 
 #chatNameTextbox {
     width: 100%;
+}
+
+.chatMessages .message {
+    padding-bottom: 2px;
+    list-style: none;
+    display: flex;
+    align-items: flex-end;
+    flex-shrink: 0;
+    -webkit-flex: 0;
+}
+
+.chatMessages .message .messageBody {
+    background-color: #f1f0f0;
+    padding: 6px 12px;
+    border-radius: 18px;
+    font-size: 14px;
+}
+
+.chatMessages .message .messageContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 55%;
+}
+
+.chatMessages .message.mine .messageContainer {
+    align-items: flex-end;
+}
+
+.chatMessages .message.theirs .messageContainer {
+    align-items: flex-start;
+}
+
+.chatMessages .message.mine {
+    flex-direction: row-reverse;
+}
+
+.chatMessages .message.mine .messageBody {
+    background-color: var(--blue);
+    color: #fff;
+}
+
+.chatMessages .message.mine.first .messageBody {
+    border-bottom-right-radius: 2px;
+}
+
+.chatMessages .message.mine:not(.first):not(.last) .messageBody {
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.chatMessages .message.mine.last .messageBody {
+    border-bottom-right-radius: 18px;
+}
+
+.chatMessages .message.mine.last:not(.first) .messageBody {
+    border-top-right-radius: 2px;
+}
+
+.chatMessages .message.theirs.first .messageBody {
+    border-bottom-left-radius: 2px;
+}
+
+.chatMessages .message.theirs:not(.first):not(.last) .messageBody {
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+.chatMessages .message.theirs.last .messageBody {
+    border-bottom-left-radius: 18px;
+}
+
+.chatMessages .message.theirs.last:not(.first) .messageBody {
+    border-top-left-radius: 2px;
+}
+
+.senderName {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.chatMessages .imageContainer {
+    height: 24px;
+    width: 24px;
+    margin-right: 7px;
+}
+
+.chatMessages img {
+    height: 100%;
+    border-radius: 50%;
+    vertical-align: bottom;
+}
+
+.chatMessages .message.last {
+    margin-bottom: 7px;
+}
+
+.loadingSpinnerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.loadingSpinnerContainer img {
+    width: 50%;
+    max-width: 75px;
 }
